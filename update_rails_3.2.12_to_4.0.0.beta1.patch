@@ -4,9 +4,6 @@ Date: Sun, 10 Mar 2013 21:00:29 +0530
 Subject: [PATCH] Replace 3.2.12 app with Rails 4.0.0.beta1 app skeleton
 
 ---
- .DS_Store                                       |  Bin 6148 -> 0 bytes
- Gemfile                                         |   24 +--
- Gemfile.lock                                    |  112 ++++++++++
  README.rdoc                                     |  263 ++---------------------
  Rakefile                                        |    1 -
  app/assets/javascripts/application.js           |    3 +-
@@ -35,45 +32,8 @@ Subject: [PATCH] Replace 3.2.12 app with Rails 4.0.0.beta1 app skeleton
  public/robots.txt                               |    2 +-
  test/performance/browsing_test.rb               |   12 --
  test/test_helper.rb                             |    4 +-
- 31 files changed, 289 insertions(+), 672 deletions(-)
- delete mode 100644 .DS_Store
- create mode 100644 Gemfile.lock
- create mode 100644 app/controllers/concerns/.keep
- delete mode 100644 app/mailers/.gitkeep
- create mode 100644 app/mailers/.keep
- delete mode 100644 app/models/.gitkeep
- create mode 100644 app/models/.keep
- create mode 100644 app/models/concerns/.keep
- create mode 100755 bin/bundle
- create mode 100755 bin/rails
- create mode 100755 bin/rake
- create mode 100644 config/initializers/filter_parameter_logging.rb
- delete mode 100644 lib/assets/.gitkeep
- create mode 100644 lib/assets/.keep
- delete mode 100644 lib/tasks/.gitkeep
- create mode 100644 lib/tasks/.keep
- delete mode 100644 log/.gitkeep
- create mode 100644 log/.keep
- delete mode 100644 public/index.html
- create mode 100644 test/controllers/.keep
- delete mode 100644 test/fixtures/.gitkeep
- create mode 100644 test/fixtures/.keep
- delete mode 100644 test/functional/.gitkeep
- create mode 100644 test/helpers/.keep
- delete mode 100644 test/integration/.gitkeep
- create mode 100644 test/integration/.keep
- create mode 100644 test/mailers/.keep
- create mode 100644 test/models/.keep
- delete mode 100644 test/performance/browsing_test.rb
- delete mode 100644 test/unit/.gitkeep
- delete mode 100644 vendor/assets/javascripts/.gitkeep
- create mode 100644 vendor/assets/javascripts/.keep
- delete mode 100644 vendor/assets/stylesheets/.gitkeep
- create mode 100644 vendor/assets/stylesheets/.keep
- delete mode 100644 vendor/plugins/.gitkeep
+---
 
-diff --git a/.DS_Store b/.DS_Store
-deleted file mode 100644
 index 5008ddfcf53c02e82d7eee2e57c38e5672ef89f6..0000000000000000000000000000000000000000
 GIT binary patch
 literal 0
@@ -86,179 +46,6 @@ z0ynLxE!0092;Krf2c+FF_Fe*7ECH>lEfg7;MkzE(HCqgga^y>{tEnwC%0;vJ&^%eQ
 zLs35+`xjp>T0<F0fCPF1$Cyrb|F7^5{eNG?83~ZUUlGt@xh*qZDeu<Z%US-OSsOPv
 j)R!Z4KLME7ReXlK;d!wEw5GODWMKRea10D2@KpjYNUI8I
 
-diff --git a/Gemfile b/Gemfile
-index 851a3c5..7dfa503 100644
---- a/Gemfile
-+++ b/Gemfile
-@@ -1,38 +1,38 @@
- source 'https://rubygems.org'
- 
--gem 'rails', '3.2.12'
--
--# Bundle edge Rails instead:
--# gem 'rails', :git => 'git://github.com/rails/rails.git'
-+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-+gem 'rails', '4.0.0.beta1'
- 
- gem 'sqlite3'
- 
--
- # Gems used only for assets and not required
- # in production environments by default.
- group :assets do
--  gem 'sass-rails',   '~> 3.2.3'
--  gem 'coffee-rails', '~> 3.2.1'
-+  gem 'sass-rails',   '~> 4.0.0.beta1'
-+  gem 'coffee-rails', '~> 4.0.0.beta1'
- 
-   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
--  # gem 'therubyracer', :platforms => :ruby
-+  # gem 'therubyracer', platforms: :ruby
- 
-   gem 'uglifier', '>= 1.0.3'
- end
- 
- gem 'jquery-rails'
- 
-+# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-+gem 'turbolinks'
-+
-+# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-+gem 'jbuilder', '~> 1.0.1'
-+
- # To use ActiveModel has_secure_password
- # gem 'bcrypt-ruby', '~> 3.0.0'
- 
--# To use Jbuilder templates for JSON
--# gem 'jbuilder'
--
- # Use unicorn as the app server
- # gem 'unicorn'
- 
- # Deploy with Capistrano
--# gem 'capistrano'
-+# gem 'capistrano', group: :development
- 
- # To use debugger
- # gem 'debugger'
-diff --git a/Gemfile.lock b/Gemfile.lock
-new file mode 100644
-index 0000000..aa6778f
---- /dev/null
-+++ b/Gemfile.lock
-@@ -0,0 +1,112 @@
-+GEM
-+  remote: https://rubygems.org/
-+  specs:
-+    actionmailer (3.2.12)
-+      actionpack (= 3.2.12)
-+      mail (~> 2.4.4)
-+    actionpack (3.2.12)
-+      activemodel (= 3.2.12)
-+      activesupport (= 3.2.12)
-+      builder (~> 3.0.0)
-+      erubis (~> 2.7.0)
-+      journey (~> 1.0.4)
-+      rack (~> 1.4.5)
-+      rack-cache (~> 1.2)
-+      rack-test (~> 0.6.1)
-+      sprockets (~> 2.2.1)
-+    activemodel (3.2.12)
-+      activesupport (= 3.2.12)
-+      builder (~> 3.0.0)
-+    activerecord (3.2.12)
-+      activemodel (= 3.2.12)
-+      activesupport (= 3.2.12)
-+      arel (~> 3.0.2)
-+      tzinfo (~> 0.3.29)
-+    activeresource (3.2.12)
-+      activemodel (= 3.2.12)
-+      activesupport (= 3.2.12)
-+    activesupport (3.2.12)
-+      i18n (~> 0.6)
-+      multi_json (~> 1.0)
-+    arel (3.0.2)
-+    builder (3.0.4)
-+    coffee-rails (3.2.2)
-+      coffee-script (>= 2.2.0)
-+      railties (~> 3.2.0)
-+    coffee-script (2.2.0)
-+      coffee-script-source
-+      execjs
-+    coffee-script-source (1.6.1)
-+    erubis (2.7.0)
-+    execjs (1.4.0)
-+      multi_json (~> 1.0)
-+    hike (1.2.1)
-+    i18n (0.6.4)
-+    journey (1.0.4)
-+    jquery-rails (2.2.1)
-+      railties (>= 3.0, < 5.0)
-+      thor (>= 0.14, < 2.0)
-+    json (1.7.7)
-+    mail (2.4.4)
-+      i18n (>= 0.4.0)
-+      mime-types (~> 1.16)
-+      treetop (~> 1.4.8)
-+    mime-types (1.21)
-+    multi_json (1.6.1)
-+    polyglot (0.3.3)
-+    rack (1.4.5)
-+    rack-cache (1.2)
-+      rack (>= 0.4)
-+    rack-ssl (1.3.3)
-+      rack
-+    rack-test (0.6.2)
-+      rack (>= 1.0)
-+    rails (3.2.12)
-+      actionmailer (= 3.2.12)
-+      actionpack (= 3.2.12)
-+      activerecord (= 3.2.12)
-+      activeresource (= 3.2.12)
-+      activesupport (= 3.2.12)
-+      bundler (~> 1.0)
-+      railties (= 3.2.12)
-+    railties (3.2.12)
-+      actionpack (= 3.2.12)
-+      activesupport (= 3.2.12)
-+      rack-ssl (~> 1.3.2)
-+      rake (>= 0.8.7)
-+      rdoc (~> 3.4)
-+      thor (>= 0.14.6, < 2.0)
-+    rake (10.0.3)
-+    rdoc (3.12.2)
-+      json (~> 1.4)
-+    sass (3.2.6)
-+    sass-rails (3.2.6)
-+      railties (~> 3.2.0)
-+      sass (>= 3.1.10)
-+      tilt (~> 1.3)
-+    sprockets (2.2.2)
-+      hike (~> 1.2)
-+      multi_json (~> 1.0)
-+      rack (~> 1.0)
-+      tilt (~> 1.1, != 1.3.0)
-+    sqlite3 (1.3.7)
-+    thor (0.17.0)
-+    tilt (1.3.4)
-+    treetop (1.4.12)
-+      polyglot
-+      polyglot (>= 0.3.1)
-+    tzinfo (0.3.36)
-+    uglifier (1.3.0)
-+      execjs (>= 0.3.0)
-+      multi_json (~> 1.0, >= 1.0.2)
-+
-+PLATFORMS
-+  ruby
-+
-+DEPENDENCIES
-+  coffee-rails (~> 3.2.1)
-+  jquery-rails
-+  rails (= 3.2.12)
-+  sass-rails (~> 3.2.3)
-+  sqlite3
-+  uglifier (>= 1.0.3)
 diff --git a/README.rdoc b/README.rdoc
 index 7c36f23..dd4e97e 100644
 --- a/README.rdoc
@@ -266,12 +53,12 @@ index 7c36f23..dd4e97e 100644
 @@ -1,261 +1,28 @@
 -== Welcome to Rails
 +== README
- 
+
 -Rails is a web-application framework that includes everything needed to create
 -database-backed web applications according to the Model-View-Control pattern.
 +This README would normally document whatever steps are necessary to get the
 +application up and running.
- 
+
 -This pattern splits the view (also called the presentation) into "dumb"
 -templates that are primarily responsible for inserting pre-built data in between
 -HTML tags. The model contains the "smart" domain objects (such as Account,
@@ -280,14 +67,14 @@ index 7c36f23..dd4e97e 100644
 -(such as Save New Account, Update Product, Show Post) by manipulating the model
 -and directing data to the view.
 +Things you may want to cover:
- 
+
 -In Rails, the model is handled by what's called an object-relational mapping
 -layer entitled Active Record. This layer allows you to present the data from
 -database rows as objects and embellish these data objects with business logic
 -methods. You can read more about Active Record in
 -link:files/vendor/rails/activerecord/README.html.
 +* Ruby version
- 
+
 -The controller and view are handled by the Action Pack, which handles both
 -layers by its two parts: Action View and Action Controller. These two layers
 -are bundled in a single package due to their heavy interdependence. This is
@@ -296,33 +83,33 @@ index 7c36f23..dd4e97e 100644
 -Rails. You can read more about Action Pack in
 -link:files/vendor/rails/actionpack/README.html.
 +* System dependencies
- 
+
 +* Configuration
- 
+
 -== Getting Started
 +* Database creation
- 
+
 -1. At the command prompt, create a new Rails application:
 -       <tt>rails new myapp</tt> (where <tt>myapp</tt> is the application name)
 +* Database initialization
- 
+
 -2. Change directory to <tt>myapp</tt> and start the web server:
 -       <tt>cd myapp; rails server</tt> (run with --help for options)
 +* How to run the test suite
- 
+
 -3. Go to http://localhost:3000/ and you'll see:
 -       "Welcome aboard: You're riding Ruby on Rails!"
 +* Services (job queues, cache servers, search engines, etc.)
- 
+
 -4. Follow the guidelines to start developing your application. You can find
 -the following resources handy:
 +* Deployment instructions
- 
+
 -* The Getting Started Guide: http://guides.rubyonrails.org/getting_started.html
 -* Ruby on Rails Tutorial Book: http://www.railstutorial.org/
 +* ...
- 
- 
+
+
 -== Debugging Rails
 -
 -Sometimes your application goes wrong. Fortunately there are a lot of tools that
@@ -548,7 +335,7 @@ index d9ce655..22bcb0e 100644
 -#!/usr/bin/env rake
  # Add your own tasks in files placed in lib/tasks ending in .rake,
  # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
- 
+
 diff --git a/app/assets/javascripts/application.js b/app/assets/javascripts/application.js
 index 9097d83..9e83eb5 100644
 --- a/app/assets/javascripts/application.js
@@ -645,9 +432,9 @@ index 688d9a2..2fc44d4 100644
 --- a/config/application.rb
 +++ b/config/application.rb
 @@ -2,12 +2,8 @@ require File.expand_path('../boot', __FILE__)
- 
+
  require 'rails/all'
- 
+
 -if defined?(Bundler)
 -  # If you precompile assets before deploying to production, use this line
 -  Bundler.require(*Rails.groups(:assets => %w(development test)))
@@ -656,13 +443,13 @@ index 688d9a2..2fc44d4 100644
 -end
 +# Assets should be precompiled for production (so we don't need the gems loaded then)
 +Bundler.require(*Rails.groups(assets: %w(development test)))
- 
+
  module NewApp
    class Application < Rails::Application
 @@ -15,16 +11,6 @@ module NewApp
      # Application configuration should go into files in config/initializers
      # -- all .rb files in that directory are automatically loaded.
- 
+
 -    # Custom directories with classes and modules you want to be autoloadable.
 -    # config.autoload_paths += %W(#{config.root}/extras)
 -
@@ -717,7 +504,7 @@ index 4489e58..3596736 100644
 -
  # Set up gems listed in the Gemfile.
  ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../../Gemfile', __FILE__)
- 
+
 diff --git a/config/environment.rb b/config/environment.rb
 index 5987e8c..4da2c70 100644
 --- a/config/environment.rb
@@ -726,7 +513,7 @@ index 5987e8c..4da2c70 100644
 -# Load the rails application
 +# Load the rails application.
  require File.expand_path('../application', __FILE__)
- 
+
 -# Initialize the rails application
 +# Initialize the rails application.
  NewApp::Application.initialize!
@@ -738,35 +525,35 @@ index 1c27cb1..295f141 100644
  NewApp::Application.configure do
 -  # Settings specified here will take precedence over those in config/application.rb
 +  # Settings specified here will take precedence over those in config/application.rb.
- 
+
    # In the development environment your application's code is reloaded on
    # every request. This slows down response time but is perfect for development
    # since you don't have to restart the web server when you make code changes.
    config.cache_classes = false
- 
+
 -  # Log error messages when you accidentally call methods on nil.
 -  config.whiny_nils = true
 +  # Do not eager load code on boot.
 +  config.eager_load = false
- 
+
 -  # Show full error reports and disable caching
 +  # Show full error reports and disable caching.
    config.consider_all_requests_local       = true
    config.action_controller.perform_caching = false
- 
+
 -  # Don't care if the mailer can't send
 +  # Don't care if the mailer can't send.
    config.action_mailer.raise_delivery_errors = false
- 
+
 -  # Print deprecation notices to the Rails logger
 +  # Print deprecation notices to the Rails logger.
    config.active_support.deprecation = :log
- 
+
 -  # Only use best-standards-support built into browsers
 -  config.action_dispatch.best_standards_support = :builtin
 +  # Raise an error on page load if there are pending migrations
 +  config.active_record.migration_error = :page_load
- 
+
 -  # Raise exception on mass assignment protection for Active Record models
 -  config.active_record.mass_assignment_sanitizer = :strict
 -
@@ -789,11 +576,11 @@ index e365e31..c1304a5 100644
  NewApp::Application.configure do
 -  # Settings specified here will take precedence over those in config/application.rb
 +  # Settings specified here will take precedence over those in config/application.rb.
- 
+
 -  # Code is not reloaded between requests
 +  # Code is not reloaded between requests.
    config.cache_classes = true
- 
+
 -  # Full error reports are disabled and caching is turned on
 +  # Eager load code on boot. This eager loads most of Rails and
 +  # your application in memory, allowing both thread web servers
@@ -804,7 +591,7 @@ index e365e31..c1304a5 100644
 +  # Full error reports are disabled and caching is turned on.
    config.consider_all_requests_local       = false
    config.action_controller.perform_caching = true
- 
+
 -  # Disable Rails's static asset server (Apache or nginx will already do this)
 +  # Enable Rack::Cache to put a simple HTTP cache in front of your application
 +  # Add `rack-cache` to your Gemfile before enabling this.
@@ -813,65 +600,65 @@ index e365e31..c1304a5 100644
 +
 +  # Disable Rails's static asset server (Apache or nginx will already do this).
    config.serve_static_assets = false
- 
+
 -  # Compress JavaScripts and CSS
 -  config.assets.compress = true
 +  # Compress JavaScripts and CSS.
 +  config.assets.js_compressor  = :uglifier
 +  # config.assets.css_compressor = :sass
- 
+
 -  # Don't fallback to assets pipeline if a precompiled asset is missed
 +  # Whether to fallback to assets pipeline if a precompiled asset is missed.
    config.assets.compile = false
- 
+
 -  # Generate digests for assets URLs
 +  # Generate digests for assets URLs.
    config.assets.digest = true
- 
+
 -  # Defaults to nil and saved in location specified by config.assets.prefix
 -  # config.assets.manifest = YOUR_PATH
 +  # Version of your assets, change this if you want to expire all your assets.
 +  config.assets.version = '1.0'
- 
+
 -  # Specifies the header that your server uses for sending files
 +  # Specifies the header that your server uses for sending files.
    # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
    # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
- 
+
    # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
    # config.force_ssl = true
- 
+
 -  # See everything in the log (default is :info)
 -  # config.log_level = :debug
 +  # Set to :debug to see everything in the log.
 +  config.log_level = :info
- 
+
 -  # Prepend all log lines with the following tags
 +  # Prepend all log lines with the following tags.
    # config.log_tags = [ :subdomain, :uuid ]
- 
+
 -  # Use a different logger for distributed setups
 +  # Use a different logger for distributed setups.
    # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
- 
+
 -  # Use a different cache store in production
 +  # Use a different cache store in production.
    # config.cache_store = :mem_cache_store
- 
+
 -  # Enable serving of images, stylesheets, and JavaScripts from an asset server
 +  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
    # config.action_controller.asset_host = "http://assets.example.com"
- 
+
 -  # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
 +  # Precompile additional assets.
 +  # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
    # config.assets.precompile += %w( search.js )
- 
+
 -  # Disable delivery errors, bad email addresses will be ignored
 +  # Ignore bad email addresses and do not raise email delivery errors.
 +  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
    # config.action_mailer.raise_delivery_errors = false
- 
+
 -  # Enable threaded mode
 -  # config.threadsafe!
 -
@@ -879,11 +666,11 @@ index e365e31..c1304a5 100644
 -  # the I18n.default_locale when a translation can not be found)
 +  # the I18n.default_locale when a translation can not be found).
    config.i18n.fallbacks = true
- 
+
 -  # Send deprecation notices to registered listeners
 +  # Send deprecation notices to registered listeners.
    config.active_support.deprecation = :notify
- 
+
 -  # Log the query plan for queries taking more than this (works
 -  # with SQLite, MySQL, and PostgreSQL)
 -  # config.active_record.auto_explain_threshold_in_seconds = 0.5
@@ -901,13 +688,13 @@ index 2ec87c5..4883155 100644
  NewApp::Application.configure do
 -  # Settings specified here will take precedence over those in config/application.rb
 +  # Settings specified here will take precedence over those in config/application.rb.
- 
+
    # The test environment is used exclusively to run your application's
    # test suite. You never need to work with it otherwise. Remember that
 @@ -7,31 +7,30 @@ NewApp::Application.configure do
    # and recreated between test runs. Don't rely on the data there!
    config.cache_classes = true
- 
+
 -  # Configure static asset server for tests with Cache-Control for performance
 +  # Do not eager load code on boot. This avoids loading your whole application
 +  # just for the purpose of running a single test. If you are using a tool that
@@ -917,7 +704,7 @@ index 2ec87c5..4883155 100644
 +  # Configure static asset server for tests with Cache-Control for performance.
    config.serve_static_assets = true
    config.static_cache_control = "public, max-age=3600"
- 
+
 -  # Log error messages when you accidentally call methods on nil
 -  config.whiny_nils = true
 -
@@ -925,21 +712,21 @@ index 2ec87c5..4883155 100644
 +  # Show full error reports and disable caching.
    config.consider_all_requests_local       = true
    config.action_controller.perform_caching = false
- 
+
 -  # Raise exceptions instead of rendering exception templates
 +  # Raise exceptions instead of rendering exception templates.
    config.action_dispatch.show_exceptions = false
- 
+
 -  # Disable request forgery protection in test environment
 -  config.action_controller.allow_forgery_protection    = false
 +  # Disable request forgery protection in test environment.
 +  config.action_controller.allow_forgery_protection = false
- 
+
    # Tell Action Mailer not to deliver emails to the real world.
    # The :test delivery method accumulates sent emails in the
    # ActionMailer::Base.deliveries array.
    config.action_mailer.delivery_method = :test
- 
+
 -  # Raise exception on mass assignment protection for Active Record models
 -  config.active_record.mass_assignment_sanitizer = :strict
 -
@@ -963,7 +750,7 @@ index 5d8d9be..ac033bf 100644
 +++ b/config/initializers/inflections.rb
 @@ -1,15 +1,16 @@
  # Be sure to restart your server when you modify this file.
- 
+
 -# Add new inflection rules using the following format
 -# (all these examples are active by default):
 -# ActiveSupport::Inflector.inflections do |inflect|
@@ -988,7 +775,7 @@ index d812dc9..a644b3f 100644
 --- a/config/initializers/secret_token.rb
 +++ b/config/initializers/secret_token.rb
 @@ -2,6 +2,11 @@
- 
+
  # Your secret key for verifying the integrity of signed cookies.
  # If you change this key, all old signed cookies will become invalid!
 +
@@ -1006,7 +793,7 @@ index 49c0af9..a4b24e3 100644
 +++ b/config/initializers/session_store.rb
 @@ -1,8 +1,3 @@
  # Be sure to restart your server when you modify this file.
- 
+
 -NewApp::Application.config.session_store :cookie_store, key: '_NewApp_session'
 -
 -# Use the database for sessions instead of the cookie-based default,
@@ -1024,13 +811,13 @@ index 999df20..33725e9 100644
 +
  # This file contains settings for ActionController::ParamsWrapper which
  # is enabled by default.
- 
+
  # Enable parameter wrapping for JSON. You can disable this by setting :format to an empty array.
  ActiveSupport.on_load(:action_controller) do
 -  wrap_parameters format: [:json]
 +  wrap_parameters format: [:json] if respond_to?(:wrap_parameters)
  end
- 
+
 -# Disable root element in JSON by default.
 -ActiveSupport.on_load(:active_record) do
 -  self.include_root_in_json = false
@@ -1066,7 +853,7 @@ index 179c14c..0653957 100644
 +#
 +# To learn more, please read the Rails Internationalization guide
 +# available at http://guides.rubyonrails.org/i18n.html.
- 
+
  en:
    hello: "Hello world"
 diff --git a/config/routes.rb b/config/routes.rb
@@ -1079,7 +866,7 @@ index 9420f51..57ffdef 100644
 -  # first created -> highest priority.
 +  # The priority is based upon order of creation: first created -> highest priority.
 +  # See how all your routes lay out with "rake routes".
- 
+
 -  # Sample of regular route:
 -  #   match 'products/:id' => 'catalog#view'
 -  # Keep in mind you can assign values other than :controller and :action
@@ -1088,17 +875,17 @@ index 9420f51..57ffdef 100644
 +
 +  # Example of regular route:
 +  #   get 'products/:id' => 'catalog#view'
- 
+
 -  # Sample of named route:
 -  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
 -  # This route can be invoked with purchase_url(:id => product.id)
 +  # Example of named route that can be invoked with purchase_url(id: product.id)
 +  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
- 
+
 -  # Sample resource route (maps HTTP verbs to controller actions automatically):
 +  # Example resource route (maps HTTP verbs to controller actions automatically):
    #   resources :products
- 
+
 -  # Sample resource route with options:
 +  # Example resource route with options:
    #   resources :products do
@@ -1107,14 +894,14 @@ index 9420f51..57ffdef 100644
 @@ -25,34 +26,24 @@ NewApp::Application.routes.draw do
    #     end
    #   end
- 
+
 -  # Sample resource route with sub-resources:
 +  # Example resource route with sub-resources:
    #   resources :products do
    #     resources :comments, :sales
    #     resource :seller
    #   end
- 
+
 -  # Sample resource route with more complex sub-resources
 +  # Example resource route with more complex sub-resources:
    #   resources :products do
@@ -1124,7 +911,7 @@ index 9420f51..57ffdef 100644
 +  #       get 'recent', on: :collection
    #     end
    #   end
- 
+
 -  # Sample resource route within a namespace:
 +  # Example resource route within a namespace:
    #   namespace :admin do
@@ -1523,7 +1310,7 @@ index 8bf1192..f91a437 100644
 +++ b/test/test_helper.rb
 @@ -3,7 +3,9 @@ require File.expand_path('../../config/environment', __FILE__)
  require 'rails/test_help'
- 
+
  class ActiveSupport::TestCase
 -  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
 +  ActiveRecord::Migration.check_pending!
@@ -1550,6 +1337,5 @@ index 0000000..e69de29
 diff --git a/vendor/plugins/.gitkeep b/vendor/plugins/.gitkeep
 deleted file mode 100644
 index e69de29..0000000
--- 
+--
 1.7.10.2 (Apple Git-33)
-
